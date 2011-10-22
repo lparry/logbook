@@ -32,7 +32,7 @@ def commit_list path
 end
 
 def commits
-  repo_names.keys.inject({}) {|hsh,name|
+  @commits ||= repo_names.keys.inject({}) {|hsh,name|
     hsh[name] = commit_list(repo_names[name]).select {|commit|
       authors.include? commit.author
     }
