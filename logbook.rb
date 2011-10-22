@@ -1,4 +1,4 @@
-require 'grit'
+require 'active_support/core_ext/time/calculations'
 
 class Object
   def tapp
@@ -39,3 +39,14 @@ def commits
     hsh
   }
 end
+
+def commits_by_day
+  commits.keys.inject(Hash.new {|hsh,k| hsh[k] = [] }) {|hsh,name|
+    commits[name].each {|commit|
+      hsh[commit.timestamp.midnight].push commit
+    }
+    hsh
+  }
+end
+
+commits_by_day
