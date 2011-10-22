@@ -1,0 +1,8 @@
+Add as many repos as you like to #repo_names, then run:
+
+    $ bundle
+    $ ruby logbook.rb
+
+All the projects' histories are merged and sorted by day, so you can look back over time and see what you worked on.
+
+Example output: http://d.pr/7tfq
