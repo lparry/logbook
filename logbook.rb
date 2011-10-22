@@ -41,9 +41,11 @@ def commits
 end
 
 def commits_by_day
-  commits.keys.inject(Hash.new {|hsh,k| hsh[k] = [] }) {|hsh,name|
+  commits.keys.inject(
+    Hash.new {|hsh,k| hsh[k] = Hash.new {|hsh,k| hsh[k] = [] } }
+  ) {|hsh,name|
     commits[name].each {|commit|
-      hsh[commit.timestamp.midnight].push commit
+      hsh[commit.timestamp.midnight][name].push commit
     }
     hsh
   }
