@@ -53,9 +53,10 @@ end
 
 def print_day day, projects
   puts day.strftime("%a %b %e %Y")
+  project_col = projects.keys.map(&:length).max
   projects.each_pair {|project,commits|
     commits.each {|commit|
-      puts "    [#{project}] #{commit.ref} #{commit.message}"
+      puts "    [#{project.ljust(project_col)}] #{commit.ref} #{commit.message}"
     }
   }
 end
