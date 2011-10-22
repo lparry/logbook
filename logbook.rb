@@ -51,4 +51,16 @@ def commits_by_day
   }
 end
 
-commits_by_day
+def print_day day, projects
+  puts day.strftime("%a %b %e %Y")
+  projects.each_pair {|project,commits|
+    commits.each {|commit|
+      puts "    [#{project}] #{commit.ref} #{commit.message}"
+    }
+  }
+end
+
+commits_by_day.keys.sort.each {|day|
+  print_day day, commits_by_day[day]
+  puts "\n\n"
+}
