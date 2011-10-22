@@ -9,6 +9,12 @@ end
 class Commit < Struct.new(:timestamp, :ref, :author, :message)
 end
 
+def authors
+  [
+    'Ben Hoskings'
+  ]
+end
+
 def repo_names
   {
     'babushka' => '~/projects/babushka/current',
@@ -25,4 +31,11 @@ def commit_list path
   }
 end
 
-commit_list(repo_names['babushka'])
+def commits
+  repo_names.keys.inject({}) {|hsh,name|
+    hsh[name] = commit_list(repo_names[name]).select {|commit|
+      authors.include? commit.author
+    }
+    hsh
+  }
+end
