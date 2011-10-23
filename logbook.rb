@@ -26,16 +26,14 @@ def default_name
 end
 
 def repo_names
-  {
-    'babushka' => '~/projects/babushka/current',
-    'my deps'  => '~/.babushka/deps',
-    'tc'       => '~/projects/tc/current',
-    'mobwrite' => '~/projects/tc/mobwrite',
-    'jobs'     => '~/projects/tc/jobs',
-    'dw'       => '~/projects/tc/dw',
-    'tc deps'  => '~/projects/tc/babushka-deps',
-    'corkboard' => '~/projects/corkboard/current'
-  }
+  raise "need to set the env var WORK_REPOS" unless ENV["WORK_REPOS"]
+
+  Dir.glob(File.join(ENV['WORK_REPOS'], "*")).select do |file|
+    File.directory?(file)
+  end.inject({}) do |acc, file|
+    acc[File.basename(file)] = file
+    acc
+  end
 end
 
 def coloured key
