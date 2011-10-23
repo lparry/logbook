@@ -28,7 +28,13 @@ end
 def repo_names
   {
     'babushka' => '~/projects/babushka/current',
-    'jobs'     => '~/projects/tc/jobs'
+    'my deps'  => '~/.babushka/deps',
+    'tc'       => '~/projects/tc/current',
+    'mobwrite' => '~/projects/tc/mobwrite',
+    'jobs'     => '~/projects/tc/jobs',
+    'dw'       => '~/projects/tc/dw',
+    'tc deps'  => '~/projects/tc/babushka-deps',
+    'corkboard' => '~/projects/corkboard/current'
   }
 end
 
