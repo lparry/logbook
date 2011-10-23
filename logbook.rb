@@ -22,7 +22,7 @@ end
 
 # The git user name specified in ~/.gitconfig
 def default_name
-  `git config --get user.name`
+  @default_name ||= `git config --get user.name`
 end
 
 def repo_names
