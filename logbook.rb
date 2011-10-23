@@ -61,7 +61,29 @@ def print_day day, projects
   }
 end
 
-commits_by_day.keys.sort.each {|day|
+def month_index month_name
+  %w[
+    january february march april may june july august september october november december
+  ].index {|m|
+    m[month_name]
+  }.tap {|index|
+    raise "#{month_name} isn't a valid month" unless index
+  } + 1
+end
+
+def days_to_show
+  if ARGV.any?
+    month = month_index(ARGV.first)
+    year = (Time.now.year - (month > Time.now.month ? 1 : 0))
+    commits_by_day.keys.select {|time|
+      time.month == month && time.year == year
+    }
+  else
+    commits_by_day.keys
+  end.sort
+end
+
+days_to_show.each {|day|
   print_day day, commits_by_day[day]
   puts "\n\n"
 }
