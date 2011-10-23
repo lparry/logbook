@@ -1,9 +1,14 @@
 require 'active_support/core_ext/time/calculations'
+require 'term/ansicolor'
 
 class Object
   def tapp
     tap { puts inspect }
   end
+end
+
+class String
+  include Term::ANSIColor
 end
 
 class Commit < Struct.new(:timestamp, :ref, :author, :message)
@@ -20,6 +25,13 @@ def repo_names
     'babushka' => '~/projects/babushka/current',
     'jobs'     => '~/projects/tc/jobs'
   }
+end
+
+def coloured key
+  colour_names = %w[blue cyan green magenta red yellow]
+  @colours ||= {}
+  @colours[key.strip] ||= colour_names[@colours.length % colour_names.length]
+  Term::ANSIColor.send @colours[key.strip], key
 end
 
 def commit_list path
@@ -56,7 +68,7 @@ def print_day day, projects
   project_col = projects.keys.map(&:length).max
   projects.each_pair {|project,commits|
     commits.each {|commit|
-      puts "    [#{project.ljust(project_col)}] #{commit.ref} #{commit.message}"
+      puts "    [#{coloured(project.ljust(project_col))}] #{commit.ref} #{commit.message}"
     }
   }
 end
